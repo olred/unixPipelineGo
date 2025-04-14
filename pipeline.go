@@ -9,7 +9,7 @@ import (
 
 type job func(in, out chan interface{})
 
-var SingleHash = func (in, out chan interface{}) {
+var SingleHash job = func (in, out chan interface{}) {
 	wg := &sync.WaitGroup{}
 	var SingleHashing = func (data interface{}, dataString string, dataStringMd5 string, out chan interface{}) {
 		defer wg.Done()
@@ -42,7 +42,7 @@ var SingleHash = func (in, out chan interface{}) {
 	wg.Wait()
 }
 
-var MultiHash = func (in, out chan interface{}) {
+var MultiHash job = func (in, out chan interface{}) {
 	wg := &sync.WaitGroup{}
 	var MultiHashing = func (data interface {}, out chan interface{}) {
 		const (
@@ -77,7 +77,7 @@ var MultiHash = func (in, out chan interface{}) {
 	wg.Wait()
 }
 
-var CombineResults = func (in, out chan interface{}) {
+var CombineResults job = func (in, out chan interface{}) {
 	var combineHashedValue string
 	var hashSlice []string
 	wg := &sync.WaitGroup{}
